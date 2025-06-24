@@ -1,0 +1,107 @@
+﻿@model IEnumerable<EnfermeriaProyectoFinal.Models.EnfCita>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoraLlegada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoraSalida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MensajeLlegada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MensajeSalida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHorarioNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPersonaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProfeLlegadaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProfeSalidaNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraLlegada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraSalida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MensajeLlegada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MensajeSalida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHorarioNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPersonaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProfeLlegadaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProfeSalidaNavigation.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
