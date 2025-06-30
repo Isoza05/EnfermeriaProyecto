@@ -7,7 +7,7 @@ public partial class EnfCita
 {
     public int Id { get; set; }
 
-    public int IdPersona { get; set; }
+    public int? IdPersona { get; set; }
 
     public int IdHorario { get; set; }
 
@@ -33,6 +33,7 @@ public partial class EnfCita
 
     public string? UsuarioModificacion { get; set; }
 
+    // Propiedad de navegación: Una cita pertenece a un horario.
     public virtual EnfHorario IdHorarioNavigation { get; set; } = null!;
 
     public virtual EnfPersona IdPersonaNavigation { get; set; } = null!;
@@ -40,4 +41,6 @@ public partial class EnfCita
     public virtual EnfPersona? IdProfeLlegadaNavigation { get; set; }
 
     public virtual EnfPersona? IdProfeSalidaNavigation { get; set; }
+
+
 }

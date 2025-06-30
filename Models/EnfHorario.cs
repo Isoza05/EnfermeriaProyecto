@@ -21,5 +21,8 @@ public partial class EnfHorario
 
     public string? UsuarioModificacion { get; set; }
 
+    // Propiedad de navegación: Un horario tiene muchas citas.
     public virtual ICollection<EnfCita> EnfCita { get; set; } = new List<EnfCita>();
+
+
 }
