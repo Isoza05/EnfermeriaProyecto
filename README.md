@@ -64,6 +64,5 @@ El proyecto está diseñado para funcionar con una base de datos local de SQL Serv
 
 
 	## Autores:
-	Ismael Enrique Jarquin Soza
-	Emily Tatiana Matute Guerrero
+	Ismael Enrique Jarquin Soza y Emily Tatiana Matute Guerrero
     
