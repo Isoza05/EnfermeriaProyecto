@@ -3,24 +3,25 @@
     ViewData["Title"] = "Gestión de Disponibilidad de Citas";
 }
 
-<div class="container">
-    <h1 class="my-4">@ViewData["Title"]</h1>
+<!-- 1. Contenedor principal con el nuevo estilo de la hoja custom-styles.css -->
+<div class="gestion-container">
 
-    <!-- ÁREA DE FILTRO -->
-    <div class="row mb-4 align-items-end">
-        <div class="col-md-4">
-            <form asp-controller="GestionDisponibilidad" asp-action="Index" method="get">
-                <div class="form-group">
-                    <label asp-for="FechaSeleccionada" class="control-label"></label>
-                    <input asp-for="FechaSeleccionada" type="date" class="form-control" onchange="this.form.submit()" />
-                </div>
+    <!-- 2. Título principal con la nueva fuente y estilo -->
+    <h1 class="gestion-titulo">Gestión de disponibilidad de citas</h1>
+
+    <!-- ÁREA DE FILTRO (sin cambios de estilo por ahora) -->
+    <div class="row mb-5 align-items-end">
+        <div class="col-md-6">
+            <label asp-for="FechaSeleccionada" class="form-label fw-bold"></label>
+            <form asp-controller="GestionDisponibilidad" asp-action="Index" method="get" class="d-flex">
+                <input asp-for="FechaSeleccionada" type="date" class="form-control me-2" onchange="this.form.submit()" />
             </form>
         </div>
-        <div class="col-md-8">
-            <h4>
-                Total de Citas Activas para el @Model.FechaSeleccionada.ToShortDateString():
-                <span id="total-citas-badge" class="badge bg-success">@Model.TotalCitasActivas</span>
-            </h4>
+        <div class="col-md-6 text-md-end">
+            <h5 class="mb-0">
+                Total de citas para el @Model.FechaSeleccionada.ToShortDateString():
+                <span id="total-citas-badge" class="badge bg-dark fs-6">@Model.TotalCitasActivas</span>
+            </h5>
         </div>
     </div>
 
@@ -41,6 +42,7 @@
         }
         else
         {
+            <!-- El formulario es invisible, solo agrupa los datos para JS -->
             <form id="form-gestion-citas">
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
@@ -87,10 +89,11 @@
         </button>
         <div id="mensaje-guardado" class="mt-3"></div>
     </div>
-</div>
 
+</div> <!-- Cierre del gestion-container -->
 @section Scripts {
     <script>
+        // Tu código JavaScript que ya funciona va aquí, no se necesita cambiar.
         $(document).ready(function () {
             function actualizarEstado(filaHorario) {
                 var inputCantidad = filaHorario.find('.cantidad-citas');
@@ -99,7 +102,7 @@
                 if (cantidad > 0) {
                     spanEstado.text('Activo').removeClass('bg-danger').addClass('bg-success');
                 } else {
-                    spanEstado.text('Cancelado').removeClass('bg-success').addClass('bg-danger');
+                    spanEstado.text('Cancelado').removeClass('bg-danger').addClass('bg-danger');
                 }
             }
             $('#tabla-horarios').on('click', '.btn-sumar', function () {
@@ -130,45 +133,26 @@
                 var divMensaje = $('#mensaje-guardado');
                 boton.prop('disabled', true).text('Guardando...');
                 divMensaje.empty();
-                       // ... esto está dentro del evento de click del botón ...
-
-        $.ajax({
-            url: '@Url.Action("GuardarCambios", "GestionDisponibilidad")',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(datosParaGuardar),
-
-            // ================== INICIO DEL BLOQUE A REEMPLAZAR ==================
-            success: function(response) {
-                // Esta función se ejecuta si el servidor responde con un código de éxito (ej: 200 OK)
-
-                if(response.success) {
-                    // El servidor nos dijo que la operación fue exitosa
-
-                    // 1. Mostramos el mensaje de éxito al usuario
-                    divMensaje.html('<div class="alert alert-success mt-3">¡Cambios guardados correctamente!</div>');
-
-                    // 2. Actualizamos el contador con el nuevo total que nos envió el servidor
-                    $('#total-citas-badge').text(response.nuevoTotalCitas);
-
-                } else {
-                    // El servidor nos dijo que algo falló (un error controlado, ej: datos inválidos)
-                    divMensaje.html('<div class="alert alert-danger mt-3">' + response.message + '</div>');
-                }
-            },
-            error: function() {
-                // Esta función se ejecuta si hay un error de red o el servidor responde con un error no controlado (ej: 500 Internal Server Error)
-                divMensaje.html('<div class="alert alert-danger mt-3">Error de conexión. No se pudieron guardar los cambios.</div>');
-            },
-            complete: function() {
-                // Esta función se ejecuta siempre, tanto en éxito como en error, una vez que la llamada termina.
-                // La usamos para volver a habilitar el botón.
-                boton.prop('disabled', false).text('Guardar Cambios');
-            }
-            // =================== FIN DEL BLOQUE A REEMPLAZAR ====================
-        });
-
-        // ... aquí termina el evento de click ...
+                $.ajax({
+                    url: '@Url.Action("GuardarCambios", "GestionDisponibilidad")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(datosParaGuardar),
+                    success: function(response) {
+                        if(response.success) {
+                            divMensaje.html('<div class="alert alert-success mt-3">¡Cambios guardados correctamente!</div>');
+                            $('#total-citas-badge').text(response.nuevoTotalCitas);
+                        } else {
+                            divMensaje.html('<div class="alert alert-danger mt-3">' + response.message + '</div>');
+                        }
+                    },
+                    error: function() {
+                        divMensaje.html('<div class="alert alert-danger mt-3">Error de conexión. No se pudieron guardar los cambios.</div>');
+                    },
+                    complete: function() {
+                        boton.prop('disabled', false).text('Guardar Cambios');
+                    }
+                });
             });
         });
     </script>
